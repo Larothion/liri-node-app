@@ -1,6 +1,6 @@
 {
-  "name": "liri",
-  "version": "1.0.1",
+  "name": "taylor",
+  "version": "1.0.2",
   "description": "liri node init",
   "main": "package",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Larothion/liri-node-app#readme",
   "dependencies": {
+    "fs": "0.0.1-security",
     "request": "^2.81.0",
     "spotify": "^0.3.0",
     "twitter": "^1.7.0"
