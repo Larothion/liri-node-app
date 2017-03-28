@@ -1,0 +1,19 @@
+{
+  "name": "liri",
+  "version": "1.0.1",
+  "description": "liri node init",
+  "main": "package",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Larothion/liri-node-app.git"
+  },
+  "author": "Taylor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Larothion/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/Larothion/liri-node-app#readme"
+}
