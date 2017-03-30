@@ -4,29 +4,34 @@ var twitApi = require("./keys.js");
 var spotify = require('spotify');
 var fs = require("fs");
 var request = require("request");
+var Twitter = require('twitter');
 
 /*store all of the imported api keys into variables... because idk why.*/
-var consumer_key = twitApi.twitterKeys.consumer_key;
-console.log(consumer_key);
-var consumer_secret = twitApi.twitterKeys.consumer_secret;
-console.log(consumer_secret);
-var access_token_key = twitApi.twitterKeys.access_token_key;
-console.log(access_token_key);
-var access_token_secret = twitApi.twitterKeys.access_token_secret;
-console.log(access_token_secret);
+var client = new Twitter({
+  consumer_key: twitApi.twitterKeys.consumer_key,
+  consumer_secret: twitApi.twitterKeys.consumer_secret,
+  access_token_key: twitApi.twitterKeys.access_token_key,
+  access_token_secret: twitApi.twitterKeys.access_token_secret
+});
+
 
 // Take in the command line arguments
 var nodeArgs = process.argv;
 var songName = nodeArgs[3];
+	var songN = "";
 var movieName = nodeArgs[3];
+	var movieN = "";
+var count = 4;
+
+
 
 if (nodeArgs[2] == "spotify-this-song") {
 
- readFile();
+ spotifyThis();
 
 } else if (nodeArgs[2] == "my-tweets") {
 
-	tweets();
+	tweetThis();
 
 } else if (nodeArgs[2] == "movie-this") {
 
@@ -34,7 +39,13 @@ if (nodeArgs[2] == "spotify-this-song") {
 
 }
 
-function readFile(){
+function spotifyThis(){
+
+for (i=3 ; i < nodeArgs.length ; i++) {
+	songN = songN + process.argv[i] + " ";
+	songName = songN;
+}
+
 fs.readFile("random.txt", "utf8", function(error, response){
    console.log(response);
     spotify.search({ type: 'track', query: songName }, function(err, data) {
@@ -51,12 +62,27 @@ fs.readFile("random.txt", "utf8", function(error, response){
  });
 }//end function
 
-function tweets() {
+function tweetThis() {
 
-}//end function
+var params = {screen_name: 'nodejs'};
+client.get('statuses/user_timeline.json?screen_name=portillaj20&' + count, function(error, tweets, response) {
+  
+  for (var i = 0; i < tweets.length; i++) {
+           console.log("===================Tweet:" + (i + 1) + "======================");
+           console.log(JSON.stringify(tweets[i].created_at, null, 2));
+           console.log(JSON.stringify(tweets[i].text, null, 2));
+           console.log("================================================");
+       }//end for loop
 
+});//end function
+}
 /*Run a request to the OMDB API with the movie specified*/
 function movieThis() {
+
+for (i=3 ; i < nodeArgs.length ; i++) {
+	movieN = movieN + process.argv[i] + " ";
+	movieName = movieN;
+}
 
  request("http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&r=json", function(error, response, body) {
 
@@ -74,5 +100,7 @@ function movieThis() {
 	  }
 	});
 }
+
+
 
 
