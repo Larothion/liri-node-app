@@ -37,6 +37,10 @@ if (nodeArgs[2] == "spotify-this-song") {
 
 	movieThis();
 
+} else if (nodeArgs[2] == "do-what-it-says") {
+
+	sayThis();
+
 }
 
 function spotifyThis(){
@@ -65,7 +69,7 @@ fs.readFile("random.txt", "utf8", function(error, response){
 function tweetThis() {
 
 var params = {screen_name: 'nodejs'};
-client.get('statuses/user_timeline.json?screen_name=portillaj20&' + count, function(error, tweets, response) {
+client.get('statuses/user_timeline.json?screen_name=larothion&' + count, function(error, tweets, response) {
   
   for (var i = 0; i < tweets.length; i++) {
            console.log("===================Tweet:" + (i + 1) + "======================");
@@ -100,6 +104,26 @@ for (i=3 ; i < nodeArgs.length ; i++) {
 	  }
 	});
 }
+
+function sayThis(){
+
+
+
+fs.readFile("random.txt", "utf8", function(error, response){
+   console.log(response);
+    spotify.search({ type: 'track', query: songName }, function(err, data) {
+       console.log("=========================================");
+       //artist name
+       console.log("Artist: " + JSON.stringify(data.tracks.items[0].album.artists[0].name, null, 2));
+       //song name
+       console.log("Song Title: " + JSON.stringify(data.tracks.items[0].name, null, 2));
+       console.log("Album Name: " + JSON.stringify(data.tracks.items[0].album.name, null, 2));
+       //preview link of the song
+       console.log("Preview Song: " + JSON.stringify(data.tracks.items[0].preview_url, null, 2));
+       console.log("=========================================");
+    });
+ });
+}//end function
 
 
 
